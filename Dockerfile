@@ -3,7 +3,7 @@ LABEL MAINTAINER="SAGAR BHOOSHAN" type="Edureka Devops Certification Project" ve
 
 ENV TZ=Asia/Kolkata
 SHELL ["/bin/bash", "-c"]
-COPY --chown=www-data:www-data website/website /var/www/html/
+COPY --chown=www-data:www-data website /var/www/html/
 RUN apt-get update && \
     apt-get install -y php && \
     rm -f /var/www/html/index.html
