@@ -4,10 +4,9 @@ pipeline {
         stage('Clone my Repo from git'){
             steps{
                 echo "Clone my devops repo:"
-                git branch: 'master', url: 'https://github.com/sagar-unix/devopseng.git'
+                git branch: 'master', url: 'https://github.com/sagar-unix/projCert.git'
             }
         }
-
         stage('Execute the playbook: Webservers'){
             steps{
                 echo "Executing the playbook: Webservers"
@@ -26,7 +25,7 @@ pipeline {
        stage('Installing pre-requesities for Selenium testing'){
            agent{ label 'slave' }
            steps{
-               sh "curl https://raw.githubusercontent.com/sagar-unix/se_prerequesities/main/dependency_install.sh |bash"
+               sh "curl https://raw.githubusercontent.com/sagar-unix/projCert/master/dependency_install.sh |bash"
            }
        }
        stage('Run Test'){

@@ -1,4 +1,3 @@
-
 ---
 - hosts: webservers
   become: true
@@ -14,9 +13,5 @@
       - docker
       - curl
       - wget
-  - name: start docker
+  - name: start docker service
     service: name=docker state=started
-  - name: Dowload PHP source code base repo
-    git:
-      repo: 'https://github.com/sagar-unix/projCert.git'
-      dest: /home/ec2-user/jenkins/workspace/devops/website
