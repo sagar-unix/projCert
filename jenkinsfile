@@ -1,0 +1,46 @@
+pipeline {
+    agent{label 'master'}
+    stages{
+        stage('Clone my Repo from git'){
+            steps{
+                echo "Clone my devops repo:"
+                git branch: 'master', url: 'https://github.com/sagar-unix/devopseng.git'
+            }
+        }
+
+        stage('Execute the playbook: Webservers'){
+            steps{
+                echo "Executing the playbook: Webservers"
+                ansiblePlaybook colorized: true, credentialsId: 'slave1', disableHostKeyChecking: true, installation: 'myansible', inventory: 'dev.inv', playbook: 'devops_playbook.yml'
+            }
+        }
+       stage('Docker Build and Run') {
+            agent{ label 'slave'}
+            steps {
+                sh "sudo docker rm -f edurekaApp || true"
+                sh "sudo docker rmi -f edurekaimg || true"
+                sh "sudo docker build -t edurekaimg ."
+                sh "sudo docker run -it -d --name edurekaApp -p 8080:80 edurekaimg"
+            }
+        }
+       stage('Installing pre-requesities for Selenium testing'){
+           agent{ label 'slave' }
+           steps{
+               sh "curl https://raw.githubusercontent.com/sagar-unix/se_prerequesities/main/dependency_install.sh |bash"
+           }
+       }
+       stage('Run Test'){
+           agent{ label 'slave' }
+           steps{
+               sh "java -jar devops_sagar_edureka.jar"
+           }
+           post{
+               failure{
+                   sh 'echo "Test Failure : Removing application !"'
+                   sh "sudo docker rm -f edurekaApp"
+               }
+
+           }
+       }
+    }
+}

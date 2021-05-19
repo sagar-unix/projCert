@@ -1,0 +1,22 @@
+
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  tasks:
+  - name: Install some packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - java-1.8.0-openjdk-devel.x86_64
+      - git
+      - docker
+      - curl
+      - wget
+  - name: start docker
+    service: name=docker state=started
+  - name: Dowload PHP source code base repo
+    git:
+      repo: 'https://github.com/sagar-unix/projCert.git'
+      dest: /home/ec2-user/jenkins/workspace/devops/website
