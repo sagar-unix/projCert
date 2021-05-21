@@ -15,7 +15,8 @@ As soon as the developer pushes the updated code on my GIT master branch [repo][
  ![Demo][2]
 
 ## Getting Started ##
-- [x] Created a decalrative pipeline to execute whole job as CI/CD.
+- [x] Created Jenkins Job pipeline that polls my [repo][1] for any commits pushed in by devs as build triggers.
+- [x] Created a decalrative pipeline to execute whole job as CI/CD devops model.
   - [x] Clone repo `https://github.com/sagar-unix/projCert.git` in Jenkins Master.
   - [x] Run the Ansible Configuration management tool playbook to provision the slave with required packages from Jenkins Master on Slave.
     - [x] Make sure packages [Java 1.8, git, docker, curl] are present/installed.
