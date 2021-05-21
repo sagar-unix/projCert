@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh "sudo docker rm -f edurekaApp || true"
                 sh "sudo docker rmi -f edurekaimg || true"
-                sh "sudo docker build -no-cache -t edurekaimg ."
+                sh "sudo docker build --no-cache -t edurekaimg ."
                 sh "sudo docker run -it -d --name edurekaApp -p 8080:80 edurekaimg"
             }
         }
